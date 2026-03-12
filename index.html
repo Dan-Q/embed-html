@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>&lt;embed-html&gt; - the HTML Embedding JS Component</title>
+	<link rel="stylesheet" href="style.css">
+	<script type="module" src="embed-html.js"></script>
+</head>
+<body>
+	<header>
+		<h1>
+			<code>&lt;embed-html&gt;</code>
+			The HTML-Embedding Web Component
+		</h1>
+	</header>
+
+	<main>
+		<section>
+			<h2 id="how">How to use</h2>
+			<ol>
+				<li>
+					<p>
+						Include the JavaScript anywhere on your page:
+					</p>
+					<p>
+						<code>
+							&lt;script type="module" src="//embed-html.danq.dev/embed-html.js"&gt;&lt;/script&gt;
+						</code>
+					</p>
+					<p>
+						<small>
+							(or download <a href="embed-html.js" download>embed-html.js</a> file and host it yourself)
+						</small>
+					</p>
+				</li>
+				<li>
+					<p>
+						Use the <code>&lt;embed-html&gt;</code> element to embed other HTML files:
+					</p>
+					<p>
+						<code>
+							&lt;embed-html src="embedded-content.html"&gt;&lt;/embed-html&gt;
+						</code>
+					</p>
+					<p>
+						Now the contents of that file get injected into your page!
+					</p>
+				</li>
+			</ol>
+		</section>
+
+		<section>
+			<h2 id="example">Example</h2>
+			<p>
+				The HTML below was embedded from <a href="embedded-content.html" target="_blank">embedded-content.html</a>:
+			</p>
+			<embed-html src="embedded-content.html" cache></embed-html>
+		</section>
+
+		<section>
+			<h2 id="why">Why would I use this?</h2>
+			<p>
+				If you're writing static HTML web pages but you're <em>not</em> using a static site generator, it can be hard to
+				keep shared components like your site header or menu in-sync across all of your pages.
+			</p>
+			<p>
+				A popular solution is to use an <code>&lt;iframe&gt;</code> element, but this introduces a few challenges.
+				<code>&lt;iframe&gt;</code>s are styled separately from the rest of your page, can introduce challenges for
+				responsive design and accessibility, require their size to be specified independently of their content, and
+				make interactions "between" the iframe and the rest of your page much more difficult.
+			</p>
+			<p>
+				Another popular solution is to use a shared JavaScript file to render the content. This project is a streamlined
+				version of that approach, implemented as a Web Component.
+			</p>
+		</section>
+
+		<section>
+			<h2 id="advanced">Advanced usage</h2>
+			<p>
+				Now you know everything you need to use <code>&lt;embed-html&gt;</code>. But there are a few advanced features you might like:
+			</p>
+			<h3 id="caching">Caching</h3>
+			<p>
+				By default, the content is fetched and injected into the page every time the <code>&lt;embed-html&gt;</code> element is loaded.
+				If you set the <code>cache</code> attribute, the content will be <em>cached</em> in localStorage (with a "refresh-in-background"
+				strategy):
+			</p>
+			<p>
+				<code>
+					&lt;embed-html src="embedded-content.html" cache&gt;&lt;/embed-html&gt;
+				</code>
+			</p>
+			<p>
+				The next time the page is loaded, the embedded page will be loaded from the cache and will appear instantly! The cache will be
+				quietly updated in the background if the embedded page has been changed, and the updated version will be shown the <em>next</em>
+				time the page is loaded.
+			</p>
+			<p>
+				<code>cache</code> is a great option to use for content that doesn't change very often like headers and menus, especially if they're
+				used across many pages.
+			</p>
+			<h3 id="delays">Delays and lazy-loading</h3>
+			<p>
+				If you want to reduce the bandwidth consumed by loading your page, or prioritise loading other content first, you can use the
+				<code>lazy</code> and/or <code>delay</code> attributes. This can be helpful for footers of long pages, for example. Note that
+				<code>lazy</code> and <code>delay</code> do nothing if <code>cache</code> is set!
+			</p>
+			<p>
+				<code>lazy</code> mode makes the embedded content only load once it's scrolled into view:
+			</p>
+			<p>
+				<code>
+					&lt;embed-html src="embedded-content.html" lazy&gt;&lt;/embed-html&gt;
+				</code>
+			</p>
+			<p>
+				<code>delay</code> mode makes the embedded content only load after a time delay (in milliseconds):
+			</p>
+			<p>
+				<code>
+					&lt;embed-html src="embedded-content.html" delay="1000"&gt;&lt;/embed-html&gt;
+				</code>
+			</p>
+			<p>
+				If you use <em>both</em> <code>lazy</code> and <code>delay</code>, the delay timer only starts after the embedding area scrolls
+				into view.
+			</p>
+			<h3 id="fallback">Fallback content</h3>
+			<p>
+				Anything placed <em>within</em> the <code>&lt;embed-html&gt;</code> element will be shown only until the embedded content is loaded.
+				This means it's suitable for things like:
+			</p>
+			<ul>
+				<li>
+					<strong>Placeholder content</strong>, e.g. a loading spinner or a message saying "Loading...":<br>
+					<code>&lt;embed-html src="embedded-content.html"&gt;Loading...&lt;/embed-html&gt;</code>
+				</li>
+				<li>
+					<strong>Alternate content</strong>, which is visible even to people with JavaScript disabled:<br>
+					<code>&lt;embed-html src="embedded-content.html"&gt;<br>&nbsp;&nbsp;See the <br>&nbsp;&nbsp;&lt;a href="embedded-content.html" target="_blank"&gt;embedded content&lt;/a&gt;<br>&nbsp;&nbsp;here!<br>&lt;/embed-html&gt;</code>
+				</li>
+			</ul>
+			<h3 id="styling">Styling</h3>
+			<p>
+				The <code>&lt;embed-html&gt;</code> element can be styledwith CSS like any other HTML element. Any styles applied to it are
+				thrown away once the embedded content is loaded. This means it can be used to style a "loading" placeholder or other fallback content:
+			</p>
+			<p>
+				<code>
+					&lt;embed-html<br>&nbsp;&nbsp;src="embedded-content.html"<br>&nbsp;&nbsp;style="display: grid; place-items: center; background-color: #eee;"<br>&gt;<br>&nbsp;&nbsp;Loading...<br>&lt;/embed-html&gt;
+				</code>
+			</p>
+			<p>
+				If you can accurately estimate the height that the embedded content will take up, this approach can also be used to "hold" the vertical
+				space in the page (so content doesn't "jump" when it loads):
+			</p>
+			<p>
+				<code>
+					&lt;embed-html src="embedded-content.html" style="display: block; height: 200px;"&gt;<br>&lt;/embed-html&gt;
+				</code>
+			</p>
+			<h3 id="nesting">Nesting</h3>
+			<p>
+				It's possible - though perhaps not advisable! - to <em>nest</em> <code>&lt;embed-html&gt;</code> elements inside
+				embedded content. Just be careful not to create an infinite loop!
+			</p>
+			<h3>Cross-origin embeds</h3>
+			<p>
+				If you want to embed HTML from a different domain (site), you'll need need the other site's webserver to be configured for
+				cross-origin requests or they won't work.
+			</p>
+		</section>
+	</main>
+
+	<footer>
+		<ul>
+			<li>
+				<a href="https://danq.me/">
+					<img width="88" height="31" src="https://danq.me/_q26t/badges/dan-q-88x31-lighter.gif" alt="Made by Dan Q">
+				</a>
+			</li>
+			<li>
+				<a href="https://github.com/dan-q/embed-html">
+					<img width="88" height="31" src="github.png" alt="View source on GitHub">
+				</a>
+			</li>
+		</ul>
+	</footer>
+</body>
+</html>

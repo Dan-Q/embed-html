@@ -1,0 +1,41 @@
+<div id="my-embedded-content">
+  <p>
+		This embedded content was loaded from <code>embedded-content.html</code>.
+	</p>
+	<p>
+		It contains a HTML fragment (which you're reading right now), and it's styled in accordance with the
+		CSS of the parent page. It can also optionally provide its own CSS and JavaScript, which will be
+		injected into the parent page and apply to both it and to the embedded content.
+	</p>
+	<p>
+		<button id="my-embedded-content-button">Click me</button>
+	</p>
+	<p id="button-result">
+		You haven't clicked the button yet.
+	</p>
+</div>
+
+<style>
+	/* CSS in the embedded content gets applied, see: */
+	#my-embedded-content p:nth-child(even) {
+		padding: 1rem;
+		border: 2px solid #44e;
+		border-radius: 0.5rem;
+	}
+</style>
+
+<script>
+	/* You can use JavaScript either inline or via <script src="..."> and it works just fine: */
+	const buttonResult = document.getElementById('button-result');
+	const randomSentences = [
+		'This shows that the JavaScript in the embedded content runs properly!',
+		"I guess it's okay to put a <script> tag into your embedded content.",
+		'Look in embedded-content.html to see the JavaScript code that made this button work.',
+		'<style>, <script>, and other tags all work just fine in embedded content.',
+		'Go on. Press it again!'
+	];
+	document.getElementById('my-embedded-content-button').addEventListener('click', () => {
+		const randomSentence = randomSentences[Math.floor(Math.random() * randomSentences.length)];
+		buttonResult.textContent = `You last clicked the button at ${new Date().toLocaleTimeString()}. ${randomSentence}`;
+	});
+</script>

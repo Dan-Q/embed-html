@@ -1,0 +1,96 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Optima, Candara, 'Noto Sans', source-sans-pro, sans-serif;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: #fff;
+	color: #333;
+	margin: 0.5rem 0;
+	min-height: 100vh;
+	background-color: #ffc32b;
+	background-image: url('diagmonds.png');
+}
+
+code {
+	font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+}
+
+header, main, footer {
+	margin: 0.6rem;
+	padding: 0.6rem;
+	width: 100%;
+}
+
+header, main {
+	max-width: 800px;
+	background: #fffa;
+	border-radius: 0.5rem;
+}
+
+header {
+	text-align: center;
+}
+
+h1 {
+	font-size: 180%;
+	line-height: 1.2;
+	margin: 0;
+
+	code {
+		display: block;
+		font-size: 220%;
+		color: #070;
+		font-style: italic;
+	}
+}
+
+h2 {
+	text-align: center;
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+	code {
+		color: #070;
+		font-weight: bold;
+	}
+
+	section:first-of-type {
+		background: white;
+		border-radius: 0.5rem 0.5rem 0 0;
+		font-size: 110%;
+	}
+}
+
+p:has(button) {
+	text-align: center;
+}
+
+button {
+	font-size: 1.4rem;
+	padding: 0.25rem 1rem;
+	font-family: monospace;
+}
+
+footer {
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px 24px;
+		justify-content: space-around;
+
+		li {
+			list-style: none;
+		}
+	}
+}
